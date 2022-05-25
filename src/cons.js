@@ -1,6 +1,6 @@
 import {APP_CSRK, APP_TOKNN} from "@env";
 
-const WS = false;  //TESTNET
+const WS = true;  //TESTNET
 
 const TokenTest = "0x038987095f309d3640F51644430dc6C7C4E2E409"; //token de pruebas
 const SCtest = "0xD9bb599445B160D9606EfDa11c34E009CCee237a";// contrato test market v2

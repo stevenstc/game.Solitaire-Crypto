@@ -191,18 +191,10 @@ class App extends Component {
           if (!this.state.conectado) return (<TronLinkGuide installed />);
     
           switch (getString) {
-            case "youtuber":
-            case "myfavorite":
-            case "fan": 
-              return(<Fan wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
-            case "staking":
-              return(<Staking wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
-            case "market":
-              return(<Market wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
-            case "inventory":
+           case "inventory":
               return(<Inventory wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
             default:
-              return(<Staking wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
+              return(<Inventory wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
           } 
         }else{
           return(<div className="container"><h1 className="text-center">Loading...</h1></div>);
