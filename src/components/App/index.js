@@ -3,32 +3,20 @@ import React, { Component } from "react";
 import Web3 from "web3";
 
 import Inventory from "../Inventory"
-import Market from "../Market";
-import Fan from "../Fan";
-import Staking from "../Staking"
 import TronLinkGuide from "../TronLinkGuide";
 import cons from "../../cons"
 
-import abiToken from "../../token";
 import abiMarket from "../../market";
-import abiFan from "../../fan"
 import abiStaking from "../../staking"
-import abiFaucet from "../../faucet"
 
-var addressToken = cons.TOKEN;
 var addressMarket = cons.SC;
-var addressFan = cons.SC2;
 var addressStaking = cons.SC3;
-var addressFaucet = cons.SC4;
 
 var chainId = '0x38';
 
 if(cons.WS){
-  addressToken = cons.TokenTest;
   addressMarket = cons.SCtest;
-  addressFan = cons.SC2test;
   addressStaking = cons.SC3test;
-  addressFaucet = cons.SC4;
   chainId = '0x61';
 }
 
@@ -108,35 +96,20 @@ class App extends Component {
         });
   
         var web3 = new Web3(window.web3.currentProvider); 
-        var contractToken = new web3.eth.Contract(
-          abiToken,
-          addressToken
-        );
         var contractMarket = new web3.eth.Contract(
           abiMarket,
           addressMarket
-        );
-        var contractFan = new web3.eth.Contract(
-          abiFan,
-          addressFan
         );
         var contractStaking = new web3.eth.Contract(
           abiStaking,
           addressStaking
         );
-        var contractFaucet = new web3.eth.Contract(
-          abiFaucet,
-          addressFaucet
-        )
   
         this.setState({
           binanceM:{
             web3: web3,
-            contractToken: contractToken,
             contractMarket: contractMarket,
-            contractFan: contractFan,
             contractStaking: contractStaking,
-            contractFaucet: contractFaucet
           }
         })
   
@@ -204,5 +177,3 @@ class App extends Component {
   }
 }
 export default App;
-
-// {tWeb()}
