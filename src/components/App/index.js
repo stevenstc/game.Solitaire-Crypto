@@ -12,16 +12,10 @@ import abiGame from "../../game";
 
 
 var addressMarket = cons.SC;
+var addressGame = cons.SC2;
 var addressStaking = cons.SC3;
 
-var chainId = '0x38';
-
-if(cons.WS){
-  addressMarket = cons.SCtest;
-  addressStaking = cons.SC3test;
-  chainId = '0x61';
-}
-
+var chainId = cons.chainId;
 
 class App extends Component {
   constructor(props) {
@@ -102,6 +96,10 @@ class App extends Component {
           abiMarket,
           addressMarket
         );
+        var contractGame = new web3.eth.Contract(
+          abiGame,
+          addressGame
+        );
         var contractStaking = new web3.eth.Contract(
           abiStaking,
           addressStaking
@@ -111,6 +109,7 @@ class App extends Component {
           binanceM:{
             web3: web3,
             contractMarket: contractMarket,
+            contractGame: contractGame,
             contractStaking: contractStaking,
           }
         })

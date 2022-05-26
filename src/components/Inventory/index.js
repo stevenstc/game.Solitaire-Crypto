@@ -52,8 +52,6 @@ export default class Home extends Component {
     
   }
 
-
-
   async balance() {
     var balance = await this.props.wallet.web3.eth.getBalance(this.props.currentAccount);
 
@@ -144,18 +142,13 @@ export default class Home extends Component {
 
   async balanceInMarket() {
     var investor =
-      await this.props.wallet.contractMarket.methods
+      await this.props.wallet.contractGame.methods
         .investors(this.props.currentAccount)
         .call({ from: this.props.currentAccount });
-
-        console.log(investor)
-
 
     var balance = new BigNumber(investor.balance);
 
     balance = balance.shiftedBy(-18).decimalPlaces(4).toString().replace(".", ",");
-
-    //console.log(balance)
 
     this.setState({
       balanceMarket: balance,
@@ -229,7 +222,7 @@ export default class Home extends Component {
 
     if (balance>=amount && amount > 0 && balance > 0 ) {
 
-      var result = await this.props.wallet.contractMarket.methods
+      var result = await this.props.wallet.contractGame.methods
       .buyCoins()
       .send({value: compra, from: this.props.currentAccount });
 
@@ -720,7 +713,7 @@ this.update();
                   if(user.payAt+ 86400 <= (Date.now()/1000)  && tramite > 0 && tramite-parseFloat(cantidad) >= 0 && parseFloat(cantidad) >= 0.002 && parseFloat(cantidad) <= 1){
                     
                     console.log(monedas)
-                    var result = await this.props.wallet.contractMarket.methods
+                    var result = await this.props.wallet.contractGame.methods
                     .sellCoins(monedas+"")
                     .send({ from: this.props.currentAccount });
 

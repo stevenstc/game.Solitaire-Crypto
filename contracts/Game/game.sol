@@ -1,4 +1,4 @@
-pragma solidity >=0.8.0;
+pragma solidity =0.8.7;
 // SPDX-License-Identifier: Apache-2.0
 
 library SafeMath {
@@ -76,7 +76,7 @@ contract Admin is Context, Ownable{
   }
 }
 
-contract MarketV2 is Context, Admin{
+contract Game is Context, Admin{
   using SafeMath for uint256;
   
   address payable public devsWallet = payable(0x1C261DE3DA6873c225079c73d7bA1B111eb9a5b3);
