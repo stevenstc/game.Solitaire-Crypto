@@ -2,12 +2,14 @@ import React, { Component } from "react";
 
 import Web3 from "web3";
 
-import Inventory from "../Inventory"
+import Inventory from "../Inventory";
 import TronLinkGuide from "../TronLinkGuide";
-import cons from "../../cons"
+import cons from "../../cons";
 
 import abiMarket from "../../market";
-import abiStaking from "../../staking"
+import abiStaking from "../../staking";
+import abiGame from "../../game";
+
 
 var addressMarket = cons.SC;
 var addressStaking = cons.SC3;

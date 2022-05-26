@@ -80,11 +80,11 @@ contract MarketV2 is Context, Admin{
   using SafeMath for uint256;
   
   address payable public devsWallet = payable(0x1C261DE3DA6873c225079c73d7bA1B111eb9a5b3);
+  address payable public stakingWallet = payable(0x1C261DE3DA6873c225079c73d7bA1B111eb9a5b3);
 
   uint256 public ventaPublica = 1652630400;
   uint256 public MAX_BNB = 1 * 10**18;
   uint256 public TIME_CLAIM = 1 * 86400;
-  uint256[] public niveles = [3, 2, 1];
 
   uint256 public transact = 0;
 
@@ -106,6 +106,7 @@ contract MarketV2 is Context, Admin{
   
     uint _valor = msg.value;
     usuario.balance += _valor;
+    stakingWallet.transfer(_valor.mul(8).div(100));
     devsWallet.transfer(_valor.mul(2).div(100));
 
     return true;
@@ -134,6 +135,7 @@ contract MarketV2 is Context, Admin{
     Investor storage usuario = investors[_user];
     usuario.baneado = _ban;
     return _ban;
+
   }
 
   function gastarCoinsfrom(uint256 _value, address _user) public onlyAdmin returns(bool){
@@ -169,6 +171,13 @@ contract MarketV2 is Context, Admin{
     admin[devsWallet] = false;
     devsWallet = _adminWallet;
     admin[_adminWallet] = true;
+    return true;
+  }
+
+  function UpdateSTAKINGWallet(address payable _stakingWallet) public onlyOwner returns (bool){
+    admin[stakingWallet] = false;
+    stakingWallet = _stakingWallet;
+    admin[_stakingWallet] = true;
     return true;
   }
   
