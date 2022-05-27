@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Web3 from "web3";
 
 import Inventory from "../Inventory";
+import Market from "../Market";
 import TronLinkGuide from "../TronLinkGuide";
 import cons from "../../cons";
 
@@ -165,6 +166,9 @@ class App extends Component {
           if (!this.state.conectado) return (<TronLinkGuide installed />);
     
           switch (getString) {
+            case "market":
+              return(<Market wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
+
            case "inventory":
               return(<Inventory wallet={this.state.binanceM} currentAccount={this.state.currentAccount}/>);
             default:
