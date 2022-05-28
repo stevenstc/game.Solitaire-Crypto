@@ -220,6 +220,10 @@ export default class Home extends Component {
   
     amount = amount.decimalPlaces(8).toNumber();
 
+    console.log(balance)
+    console.log(amount)
+
+
     if (balance>=amount && amount > 0 && balance > 0 ) {
 
       var result = await this.props.wallet.contractGame.methods
@@ -422,12 +426,12 @@ export default class Home extends Component {
               return;
             }
 
-            if(await window.confirm("you want profile image?")){
-              datos.imagen = await prompt("Place a profile image link in jpg jpeg or png format, we recommend that it be 500 X 500 pixels","https://cryptosoccermarket.com/assets/img/default-user-csg.png");
+            /*if(await window.confirm("you want profile image?")){
+              datos.imagen = await prompt("Place a profile image link in jpg jpeg or png format, we recommend that it be 500 X 500 pixels","");
             
-            }else{
+            }else{*/
               datos.imagen = "images/game-data.png";
-            }
+            //}
 
 
             tx = await this.props.wallet.web3.eth.sendTransaction({
@@ -759,11 +763,11 @@ this.update();
                   var cantidad = new BigNumber(document.getElementById("cantidadSbnb2").value);
                   cantidad = cantidad.shiftedBy(18);
 
-                  var gasLimit = await this.props.wallet.contractMarket.methods.gastarCoinsfrom(cantidad.toString(),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
+                  var gasLimit = await this.props.wallet.contractGame.methods.gastarCoinsfrom(cantidad.toString(),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
                   gasLimit = gasLimit*cons.FACTOR_GAS;
 
 
-                  var usuario = await this.props.wallet.contractMarket.methods.investors(this.props.currentAccount).call({from: this.props.currentAccount});
+                  var usuario = await this.props.wallet.contractGame.methods.investors(this.props.currentAccount).call({from: this.props.currentAccount});
                   var balance = new BigNumber(usuario.balance);
          
                   balance = balance.shiftedBy(-18).toNumber();
@@ -835,7 +839,7 @@ this.update();
 
                     cantidad = new BigNumber(cantidad).shiftedBy(18).toString();
                   
-                    var gasLimit = await this.props.wallet.contractMarket.methods.asignarCoinsTo(cantidad+"",  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
+                    var gasLimit = await this.props.wallet.contractGame.methods.asignarCoinsTo(cantidad+"",  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
                     
                     gasLimit = gasLimit*cons.FACTOR_GAS;
                     if(this.state.botonwit){

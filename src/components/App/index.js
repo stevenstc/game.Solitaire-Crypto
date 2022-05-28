@@ -30,7 +30,9 @@ class App extends Component {
       binanceM:{
         web3: null,
         contractToken: null,
-        contractMarket: null
+        contractMarket: null,
+        contractGame: null
+
       },
       baneado: false
       
