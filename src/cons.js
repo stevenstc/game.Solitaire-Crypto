@@ -2,9 +2,9 @@ import {APP_CSRK, APP_TOKNN} from "@env";
 
 const WS = true;  //TESTNET
 
-var SC = "0xF29bACE830B2a81c33bC360317A0f9abe154c288";// direccion del contrato Market
-var SC2 = "0x1F902Dc0d3A7BFdff5a67d7Ed873e7Dc50DC0987";
-var SC3 = "0xbF17C2Dda48158c6dc23DEEcD41690230C7517D8";// direccion del contrato Staking
+var SC = "0x1860D0262b201Cc405D50DD9F0442E3C4a137Da2";// contrato Market
+var SC2 = "0x1F902Dc0d3A7BFdff5a67d7Ed873e7Dc50DC0987";// contrato GAME
+var SC3 = "00x3a448b5b1E26149746afa3ebed9c9DeeA482d6b4";// contrato Staking
 var chainId = '0x38';
 
 if(true){
