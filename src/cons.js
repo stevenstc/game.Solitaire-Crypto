@@ -19,7 +19,7 @@ const SCKDTT = APP_TOKNN;
 
 const API = "https://solitairecrypto.ml/";
 
-const WALLETPAY = "0x793Afd1E23996303127171c65F56C3E9E4A8CBb1";
+const WALLETPAY = "0x3490E37E4791B95c1aF4CdA85c1d17f11673ff9a";
 const FACTOR_GAS = 2;
 
 

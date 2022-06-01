@@ -763,10 +763,6 @@ this.update();
                   var cantidad = new BigNumber(document.getElementById("cantidadSbnb2").value);
                   cantidad = cantidad.shiftedBy(18);
 
-                  var gasLimit = await this.props.wallet.contractGame.methods.gastarCoinsfrom(cantidad.toString(),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
-                  gasLimit = gasLimit*cons.FACTOR_GAS;
-
-
                   var usuario = await this.props.wallet.contractGame.methods.investors(this.props.currentAccount).call({from: this.props.currentAccount});
                   var balance = new BigNumber(usuario.balance);
          
@@ -775,7 +771,10 @@ this.update();
                   cantidad = cantidad.shiftedBy(-18).toNumber();
                   console.log(cantidad)
 
-                  if(balance-cantidad >= 0){
+                  if(balance-cantidad > 0 && cantidad > 0 && balance > 0){
+                    var gasLimit = await this.props.wallet.contractGame.methods.gastarCoinsfrom(cantidad.toString(),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
+                    gasLimit = gasLimit*cons.FACTOR_GAS;
+
                     tx = await this.props.wallet.web3.eth.sendTransaction({
                       from: this.props.currentAccount,
                       to: cons.WALLETPAY,
