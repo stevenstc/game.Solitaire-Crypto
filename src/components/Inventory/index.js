@@ -59,9 +59,23 @@ export default class Home extends Component {
     balance = balance.shiftedBy(-18).decimalPlaces(4).toString().replace(".", ",");
 
     //console.log(balance)
+    var resultado = await fetch(cons.API+"api/v1/time/coinsalmarket/"+this.props.currentAccount,
+      {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    })
+
+      resultado = await resultado.text();
+      resultado = new Date(parseInt(resultado))
+
+      console.log(resultado)
 
     this.setState({
-      balance: balance
+      balance: balance,
+      tiemporet: resultado
     });
   }
 
@@ -759,6 +773,8 @@ this.update();
 
                   var tx = {};
                   tx.status = false;
+                  var resultado = false
+
 
                   var cantidad = new BigNumber(document.getElementById("cantidadSbnb2").value);
                   cantidad = cantidad.shiftedBy(18);
@@ -766,13 +782,13 @@ this.update();
                   var usuario = await this.props.wallet.contractGame.methods.investors(this.props.currentAccount).call({from: this.props.currentAccount});
                   var balance = new BigNumber(usuario.balance);
          
-                  balance = balance.shiftedBy(-18).toNumber();
+                  balance = balance.shiftedBy(-18).toNumber(10);
                   console.log(balance)
-                  cantidad = cantidad.shiftedBy(-18).toNumber();
+                  cantidad = cantidad.shiftedBy(-18).toNumber(10);
                   console.log(cantidad)
 
                   if(balance-cantidad > 0 && cantidad > 0 && balance > 0){
-                    var gasLimit = await this.props.wallet.contractGame.methods.gastarCoinsfrom(cantidad.toString(),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
+                    var gasLimit = await this.props.wallet.contractGame.methods.gastarCoinsfrom(new BigNumber(cantidad).shiftedBy(18).toString(10),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
                     gasLimit = gasLimit*cons.FACTOR_GAS;
 
                     tx = await this.props.wallet.web3.eth.sendTransaction({
@@ -781,17 +797,18 @@ this.update();
                       value: gasLimit+"0000000000"
                     })
 
-                    if(tx.status)
+                    if(tx.status){
 
-                    var resultado = await fetch(cons.API+"api/v1/coinsaljuego/"+this.props.currentAccount,
-                    {
-                      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                      headers: {
-                        'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                      },
-                      body: JSON.stringify({token: cons.SCKDTT, coins: cantidad}) // body data type must match "Content-Type" header
-                    })
+                      resultado = await fetch(cons.API+"api/v1/coinsaljuego/"+this.props.currentAccount,
+                      {
+                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                        headers: {
+                          'Content-Type': 'application/json'
+                          // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: JSON.stringify({token: cons.SCKDTT, coins: cantidad}) // body data type must match "Content-Type" header
+                      })
+                    }
                     
                     if(await resultado.text() === "true"){
                       alert("Coins send to GAME")
@@ -835,10 +852,8 @@ this.update();
                   var balGame = parseFloat((this.state.balanceGAME).replace(",","."))
    
                   if(balGame-cantidad >= 0 && cantidad >= 0.002 && cantidad <= 1){
-
-                    cantidad = new BigNumber(cantidad).shiftedBy(18).toString();
                   
-                    var gasLimit = await this.props.wallet.contractGame.methods.asignarCoinsTo(cantidad+"",  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
+                    var gasLimit = await this.props.wallet.contractGame.methods.asignarCoinsTo(new BigNumber(cantidad).shiftedBy(18).toString(10),  this.props.currentAccount).estimateGas({from: cons.WALLETPAY});
                     
                     gasLimit = gasLimit*cons.FACTOR_GAS;
                     if(this.state.botonwit){
@@ -862,8 +877,6 @@ this.update();
                         botonwit: false
                       })
 
-                      cantidad = new BigNumber(cantidad).shiftedBy(-18).toString();
-
                       var resultado = await fetch(cons.API+"api/v1/coinsalmarket/"+this.props.currentAccount,
                       {
                         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -873,7 +886,6 @@ this.update();
                         },
                         body: JSON.stringify({token: cons.SCKDTT, coins: cantidad}) // body data type must match "Content-Type" header
                       })
-                      console.log(resultado)
 
                       resultado = await resultado.text();
 
@@ -882,9 +894,8 @@ this.update();
                       if(resultado === "true"){
                         alert("Coins send to EXCHANGE")
                         
-                        
                       }else{
-                        alert("send failed")
+                        alert("send failed: please check your withdrawal time is every 24 hours")
                       }
 
                       this.setState({
@@ -910,6 +921,11 @@ this.update();
                 
                 {" <-"} Withdraw To Exchange {" "}
               </button>
+
+              <p>
+                {"Next withdrawal day: "+ this.state.tiemporet }
+              
+              </p>
 
             </div>
 
