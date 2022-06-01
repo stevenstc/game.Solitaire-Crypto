@@ -80,7 +80,7 @@ contract Game is Context, Admin{
   using SafeMath for uint256;
   
   address payable public devsWallet = payable(0x1C261DE3DA6873c225079c73d7bA1B111eb9a5b3);
-  address payable public stakingWallet = payable(0x1C261DE3DA6873c225079c73d7bA1B111eb9a5b3);
+  address payable public stakingWallet = payable(0x3a448b5b1E26149746afa3ebed9c9DeeA482d6b4);
 
   uint256 public ventaPublica = 1652630400;
   uint256 public MAX_BNB = 1 * 10**18;
